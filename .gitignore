@@ -21,3 +21,4 @@ _test_output/
 
 # local conda envs (should live on D:\envs\scml per project convention)
 envs/
+ReferenceBooks/
