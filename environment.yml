@@ -1,15 +1,13 @@
 name: scml
-# Local development environment (Windows / Linux / macOS).
+# Local development environment (Windows / Linux / macOS) and the GitHub
+# Actions CI environment. The Docker image uses a separate
+# environment-docker.yml that additionally includes Linux-only packages
+# (fenics-dolfinx, lammps, julia).
+#
 # Creation command (Windows, per this project's D-drive conda convention):
 #   conda env create -p D:\Conda\envs\scml -f environment.yml
 #
-# Note: fenics-dolfinx and lammps are INTENTIONALLY NOT here. Neither
-# has a Windows conda-forge build (FEniCSx is Linux/macOS only) and the
-# Chinese mirror of conda-forge does not ship LAMMPS. The Docker image
-# (see Dockerfile) installs both via micromamba on Linux, so the HF
-# Space deployment and the CI nbconvert run cover Chapter07/4 and
-# Chapter09/4. Locally on Windows those two notebooks should be run
-# inside the Docker container instead.
+# See scripts/setup-env.ps1 / setup-env.sh for a one-click installer.
 channels:
   - conda-forge
 dependencies:
@@ -23,22 +21,26 @@ dependencies:
   - matplotlib>=3.8,<4
   - seaborn>=0.13,<1
   - scikit-learn>=1.5,<2
-  # pytorch is installed via pip from the official CPU index below; the
-  # conda-forge pytorch-cpu Windows build has an intermittent DLL-load
-  # failure (missing _C.pyd runtime dep) so we avoid it on Windows.
+  - scikit-image>=0.25     # Ch09/1 marching_cubes
   - ase>=3.23
   - ipywidgets>=8.1
   - bqplot>=0.12.43
   - k3d>=2.16
+  - ipympl>=0.9            # %matplotlib widget (Ch04/1, Ch05/1, Ch09/3-4, Ch14)
+  - pooch                  # scipy.datasets backend (Ch02/2)
+  - nglview                # molecular viewer (Ch04/2)
   - nbconvert>=7.16
   - nbclient>=0.10
   - pypdf>=5.0
-  # pip-installed packages are installed SEPARATELY after env creation,
-  # because conda env create's internal pip subprocess inherits the base
-  # env's Python 3.13 stdlib and fails. Run scripts/setup-env.ps1 for the
-  # full two-step bootstrap.
-  # Equivalent command:
-  #   D:/Conda/envs/scml/python.exe -m pip install \
-  #     --index-url https://download.pytorch.org/whl/cpu \
-  #     --extra-index-url https://pypi.org/simple \
-  #     "torch>=2.4,<3" torchvision "keras>=3.5,<4" "progress>=1.6"
+  # pip-only packages: these are installed SEPARATELY via setup-env.ps1 /
+  # the GitHub Actions "Install pip-only packages" step. We avoid a pip:
+  # block here because `conda env create` on Windows has a Python stdlib
+  # subprocess leak (base-env py3.13 leaking into pip) that breaks any
+  # pip install during env creation. Linux is fine, but we keep the
+  # two-step flow for cross-platform consistency.
+  #   scikit-fem>=10         — Ch07/4 FEM (replaces fenics-dolfinx)
+  #   vegas>=6.0             — Ch08/2 Monte Carlo integration
+  #   ipyvolume>=0.6.3       — legacy 3D plots (Ch04/2, Ch05/3)
+  #   ipython_genutils>=0.2  — ipyvolume runtime dep
+  #   version_information>=1.0.4
+  #   progress>=1.6
