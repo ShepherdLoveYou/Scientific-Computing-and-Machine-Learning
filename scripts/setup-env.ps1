@@ -27,13 +27,16 @@ if (Test-Path $EnvPath) {
     conda env create -p $EnvPath -f "$PSScriptRoot\..\environment.yml"
 
     Write-Host ""
-    Write-Host "Step 2/2: pip install torch / keras / progress via PyTorch CPU index ..."
+    Write-Host "Step 2/2: pip install scikit-fem + other pure-Python pkgs ..."
     # Running via the env's own python.exe avoids the base-env Python 3.13
     # stdlib leakage that breaks `conda env create`'s internal pip subprocess.
     & "$EnvPath\python.exe" -m pip install `
-        --index-url https://download.pytorch.org/whl/cpu `
-        --extra-index-url https://pypi.org/simple `
-        "torch>=2.4,<3" torchvision "keras>=3.5,<4" "progress>=1.6"
+        "scikit-fem>=10" `
+        "vegas>=6.0" `
+        "ipyvolume>=0.6.3" `
+        "ipython_genutils>=0.2" `
+        "version_information>=1.0.4" `
+        "progress>=1.6"
 }
 
 Write-Host ""
