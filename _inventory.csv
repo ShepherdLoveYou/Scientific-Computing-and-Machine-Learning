@@ -1,0 +1,37 @@
+chapter,notebook,cell_count,runtime_needs,ci_policy,sparse_needs_scaffold,notes
+Chapter01,1. 科学计算.ipynb,3,python,run,yes,sparse; RAG scaffold from Numerical Python ch1
+Chapter01,2. Python语言.ipynb,206,python,run,no,
+Chapter01,3. Python高级功能.ipynb,14,python,run,no,small but complete
+Chapter01,4. Jupyter.ipynb,30,python,run,no,
+Chapter02,1. Numpy数组操作.ipynb,72,python,run,no,
+Chapter02,2. Scipy高级科学计算.ipynb,182,python,run,no,
+Chapter02,3. Julia语言.ipynb,220,julia,run,no,needs IJulia kernel
+Chapter03,1. SymPy符号计算.ipynb,166,python,run,no,
+Chapter03,2. Wolfram语言.ipynb,9,wolfram,skip,yes,"dual-track: keep Wolfram display + add SymPy runnable (scaffold)"
+Chapter04,1. Matplotlib和数据可视化.ipynb,80,python,run,no,
+Chapter04,2. 数据可视化Python库.ipynb,16,python+k3d,run,yes,uses ipyvolume -> migrate to k3d; also sparse scaffold
+Chapter05,1. 方程求解.ipynb,88,python,run,no,
+Chapter05,2. 函数优化.ipynb,93,python,run,no,
+Chapter05,3. 微动弹性带方法.ipynb,34,python+k3d,run,no,uses ipyvolume -> migrate to k3d
+Chapter05,AssessmentTask.ipynb,8,python+k3d,run,yes,uses ipyvolume; sparse scaffold
+Chapter06,1. 数据插值.ipynb,69,python,run,no,
+Chapter06,2. 数值积分.ipynb,98,python,run,no,
+Chapter07,1. 常微分方程.ipynb,119,python+bqplot,run,no,uses bqplot (keep)
+Chapter07,2. 稀疏矩阵.ipynb,63,python,run,no,
+Chapter07,3. 偏微分方程.ipynb,87,python,run,no,
+Chapter07,4. 有限元方法和FEniCSx计算框架.ipynb,13,fenicsx,run,yes,needs python3-dolfinx; sparse scaffold
+Chapter07,AssessmentTask.ipynb,8,python+bqplot,run,yes,uses bqplot; sparse scaffold
+Chapter08,1. 随机过程和等概率原理.ipynb,50,python,run,no,
+Chapter08,2. 蒙特卡罗方法.ipynb,91,python,run,no,
+Chapter09,1. 数值求解薛定谔方程.ipynb,38,python,run,no,
+Chapter09,2. 密度泛函理论.ipynb,69,python,run,no,
+Chapter09,3. 分子热运动和数值模拟.ipynb,52,python,run,no,
+Chapter09,4. 分子动力学模拟.ipynb,164,python+ase+lammps,run,no,needs ASE + LAMMPS Python bindings
+Chapter09,HydrogenWaveFunction/HydrogenWaveFunction.ipynb,111,python,run,no,
+Chapter10,1. 数据处理和Pandas库.ipynb,114,python+bqplot,run,no,uses bqplot
+Chapter10,2. 统计和建模.ipynb,7,python,run,yes,sparse scaffold
+Chapter11,1. 机器学习.ipynb,3,python,run,yes,sparse scaffold from Dive into Deep Learning
+Chapter11,2. 机器学习算法.ipynb,206,python+sklearn,run,no,
+Chapter14,chapter.ipynb,72,python+keras+torch,run,no,
+Chapter14,通用近似器.ipynb,182,python+keras+torch,run,no,
+Chapter15,AssessmentTask.ipynb,220,python+keras+torch,run,no,migrate tensorflow.keras -> keras (Keras 3)

@@ -1,0 +1,48 @@
+name: sync-to-hf-space
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: sync-hf
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    if: ${{ github.repository_owner != '' }}
+    steps:
+      - name: Checkout (full history so the HF remote accepts the push)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Read HF Space target from README
+        id: hf
+        shell: bash
+        run: |
+          # Looks for a line like:  <!-- HF_SPACE: username/space-name -->
+          space=$(grep -oE '<!-- HF_SPACE: [^ ]+ -->' README.md | head -n1 | sed -E 's/.*HF_SPACE: ([^ ]+) .*/\1/')
+          if [[ -z "$space" ]]; then
+            echo "No HF_SPACE marker found in README.md. Add: <!-- HF_SPACE: <user>/<space> -->" >&2
+            exit 1
+          fi
+          echo "space=$space" >> "$GITHUB_OUTPUT"
+          echo "Mirroring to HF Space: $space"
+
+      - name: Push to Hugging Face Space
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_SPACE: ${{ steps.hf.outputs.space }}
+        run: |
+          if [[ -z "$HF_TOKEN" ]]; then
+            echo "HF_TOKEN secret is not set in repo settings." >&2
+            exit 1
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote add hf "https://user:${HF_TOKEN}@huggingface.co/spaces/${HF_SPACE}"
+          git push --force hf HEAD:main

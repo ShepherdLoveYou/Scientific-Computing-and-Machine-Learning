@@ -1,0 +1,42 @@
+name: test-notebooks
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "README.md"
+      - "LICENSE"
+      - "ReferenceBooks/**"
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: test-notebooks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  nbconvert:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up micromamba (matches Dockerfile builder env)
+        uses: mamba-org/setup-micromamba@v1
+        with:
+          environment-file: environment.yml
+          environment-name: scml
+          cache-environment: true
+          cache-downloads: true
+
+      - name: Verify environment
+        shell: bash -l {0}
+        run: |
+          python scripts/verify-env.py
+
+      - name: Execute all notebooks
+        shell: bash -l {0}
+        run: |
+          python _test_notebooks.py --timeout 180

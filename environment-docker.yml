@@ -1,0 +1,41 @@
+name: scml-docker
+# Slim environment for the Hugging Face Space Docker image (Linux).
+# Route C: all heavy packages with zero or near-zero actual usage were
+# stripped. See plan file vivid-yawning-biscuit.md for the audit.
+# Removed (~3.55 GB):
+#   lammps            -> Ch09/4 is a pure NumPy/SciPy MD impl; LAMMPS unused
+#   pytorch-cpu       -> No notebook actually imports torch
+#   torchvision       -> follows torch
+#   fenics-dolfinx    -> Ch07/4 migrated to scikit-fem (lightweight pure Python)
+#   julia             -> Ch02/3 added to skip list; chapter is display-only
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - jupyterlab>=4.2,<5
+  - numpy>=1.26,<2.1
+  - scipy>=1.13,<2
+  - sympy>=1.13,<2
+  - pandas>=2.2,<3
+  - matplotlib>=3.8,<4
+  - seaborn>=0.13,<1
+  - scikit-learn>=1.5,<2
+  - ase>=3.23
+  - ipywidgets>=8.1
+  - bqplot>=0.12.43
+  - k3d>=2.16
+  - ipympl>=0.9
+  - nbconvert>=7.16
+  - nbclient>=0.10
+  - pypdf>=5.0
+  - scikit-image>=0.25
+  - pooch                      # scipy.datasets.* needs pooch for fetches
+  - nglview                    # molecular viewer used in Ch04/2
+  - pip:
+    - progress>=1.6
+    - ipyvolume>=0.6.3         # back-compat for Ch04/2 and Ch05/3 (migrating to k3d)
+    - ipython_genutils>=0.2    # ipyvolume runtime dep on some wheels
+    - version_information>=1.0.4
+    - vegas>=6.0
+    - scikit-fem>=10           # FEM — replaces fenics-dolfinx, ~3 MB pure Python

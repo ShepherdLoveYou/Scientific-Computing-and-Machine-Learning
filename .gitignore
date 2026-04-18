@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+*.bilingual.ipynb
+*.ipynb.bak
+tmp_trans/
+
+# Welcome.ipynb is regenerated at Docker build time by _generate_welcome.py
+Welcome.ipynb
+.venv/
+.env
+.vscode/
+.idea/
+*.log
+
+# built artifacts from _test_notebooks.py / nbconvert
+_test_output/
+*.html
+!Chapter*/**/*.html
+
+# local conda envs (should live on D:\envs\scml per project convention)
+envs/

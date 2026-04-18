@@ -1,0 +1,17 @@
+* text=auto eol=lf
+
+# Keep notebooks deterministic across platforms.
+*.ipynb text eol=lf
+
+# Shell scripts must stay LF even on Windows.
+*.sh text eol=lf
+
+# Binary assets that must not be normalised.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.npz binary
+*.h5 binary
+*.zip binary

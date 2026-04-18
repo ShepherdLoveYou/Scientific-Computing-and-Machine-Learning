@@ -1,0 +1,7 @@
+# Development tooling dependencies used by tools/*.py and scripts/*.
+# Not installed in the Docker image or the course conda env — only needed
+# on a maintainer's machine when running bilingualize.py / scaffold.py.
+#
+#   pip install -r requirements-tools.txt
+anthropic>=0.40
+pypdf>=5.0

@@ -1,0 +1,6 @@
+# Docker-image-only dependencies. Installed on top of requirements.txt inside
+# the Docker build. Kept separate because these packages are not pip-wheel
+# friendly on Windows and are provided via conda-forge in the local dev env.
+# If LAMMPS has no usable wheel on a given platform, remove from this file
+# and rely on conda-forge `lammps` via environment.yml instead.
+lammps>=2024.6.27
